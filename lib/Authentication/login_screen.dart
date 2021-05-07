@@ -61,27 +61,6 @@ class _LogInPageState extends State<LogInPage> {
   }
 
   final _formKey = GlobalKey<FormState>();
-  @override
-  void initState() {
-    super.initState();
-    // setUp();
-
-    auth.authStateChanges().listen((User user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        print('User is signed in!');
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(),
-          ),
-        );
-      }
-    });
-
-    // getFullName();
-  }
 
   @override
   Widget build(BuildContext context) {

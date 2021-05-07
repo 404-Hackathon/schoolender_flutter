@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:schoolender_flutter/Authentication/login_screen.dart';
+import 'package:schoolender_flutter/Authentication/welcome_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatefulWidget {
@@ -45,10 +46,10 @@ class _HomePageState extends State<HomePage> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LogInPage(),
+                          builder: (context) => WelcomePage(),
                         ),
                       );
-                    })
+                    }),
               ],
             ),
             body: SafeArea(
