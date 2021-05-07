@@ -25,12 +25,13 @@ FirebaseAuth auth = FirebaseAuth.instance;
         print('User is currently signed out!');
       } else {
         print('User is signed in!');
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(),
-          ),
-        );
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (_) => false);
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => HomePage(),
+        //   ),
+        // );
       }
     });
 

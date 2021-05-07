@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:schoolender_flutter/Home/home_page.dart';
 import 'Authentication/login_screen.dart';
 import 'Authentication/register_screen.dart';
 import 'Authentication/welcome_screen.dart';
@@ -18,11 +19,9 @@ class MyApp extends StatelessWidget {
       title: 'MyApp',
       theme: ThemeData(
         brightness: Brightness.light,
-        accentColor: Colors.orange,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        accentColor: Colors.orangeAccent,
       ),
       themeMode: ThemeMode.system,
       home: FutureBuilder(
@@ -49,6 +48,20 @@ class MyApp extends StatelessWidget {
           );
         },
       ),
+      routes: {
+        '/home': (context) => HomePage(),
+        '/welcome': (context) => WelcomePage(),
+        '/loading': (context) => Scaffold(
+            // backgroundColor: Colors.blueAccent,
+            body: Center(
+              child: Image.network(
+                  'https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Ajux_loader.gif/240px-Ajux_loader.gif'),
+            ),
+          ),
+          '/error': (context) => Scaffold(
+              backgroundColor: Colors.redAccent,
+            ),
+      },
     );
   }
 }

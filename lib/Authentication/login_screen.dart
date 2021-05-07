@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,22 @@ class _LogInPageState extends State<LogInPage> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.WARNING,
+          animType: AnimType.SCALE,
+          title: 'Email Not Found',
+          desc: 'No user found for that email.',
+        )..show();
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.WARNING,
+          animType: AnimType.SCALE,
+          title: 'Wrong Password',
+          desc: 'Wrong password provided for that user.',
+        )..show();
       }
     }
   }
@@ -74,6 +89,9 @@ class _LogInPageState extends State<LogInPage> {
         // FocusScope.of(context).requestFocus(new FocusNode());
       },
       child: Scaffold(
+        appBar: AppBar(
+          title: Text('Login'),
+        ),
         body: SafeArea(
           child: Center(
             child: Padding(
@@ -138,12 +156,13 @@ class _LogInPageState extends State<LogInPage> {
                               email: emailController.text,
                               password: passwordController.text,
                               action: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomePage(),
-                                  ),
-                                );
+                                Navigator.pushNamedAndRemoveUntil(context, '/home', (_) => false);
+                                // Navigator.pushReplacement(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => HomePage(),
+                                //   ),
+                                // );
                               },
                             );
                             // bool isSignedIn = checkIfSignedIn();

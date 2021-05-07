@@ -242,6 +242,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                 'lastName': lastNameController.text.trim(),
                               });
                               print("New User Has Been Created ✨");
+                              Navigator.pushNamedAndRemoveUntil(context, '/home', (_) => false);
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => HomePage(),
+                              //   ),
+                              // );
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'weak-password') {
                                 // print('The password provided is too weak.');
