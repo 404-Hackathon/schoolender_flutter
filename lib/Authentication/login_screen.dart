@@ -19,8 +19,6 @@ class _LogInPageState extends State<LogInPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  
-
   Future<void> signIn(
       {@required String email,
       @required String password,
@@ -66,7 +64,22 @@ class _LogInPageState extends State<LogInPage> {
   @override
   void initState() {
     super.initState();
-    setUp();
+    // setUp();
+
+    auth.authStateChanges().listen((User user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        print('User is signed in!');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ),
+        );
+      }
+    });
+
     // getFullName();
   }
 
@@ -94,6 +107,8 @@ class _LogInPageState extends State<LogInPage> {
                     children: [
                       TextFormField(
                         controller: emailController,
+                        enableSuggestions: false,
+                        autocorrect: false,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           labelText: 'Email',

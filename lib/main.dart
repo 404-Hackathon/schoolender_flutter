@@ -14,6 +14,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MyApp',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        accentColor: Colors.orange,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        accentColor: Colors.orangeAccent,
+      ),
+      themeMode: ThemeMode.system, 
       home: FutureBuilder(
         future: _initialization,
         builder: (context, snapshot){
