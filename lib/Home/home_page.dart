@@ -1,62 +1,58 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:schoolender_flutter/Authentication/login_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:schoolender_flutter/Authentication/welcome_screen.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:schoolender_flutter/Calendar/calendar_screen.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key, required this.data}) : super(key: key);
+
+  final Map<String, dynamic> data;
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  FirebaseAuth auth = FirebaseAuth.instance;
-
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  int currentpage = 0;
+  PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(auth.currentUser.uid).get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
-        }
-        if (snapshot.hasData && !snapshot.data.exists) {
-          return Text("Document does not exist");
-        }
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data.data();
-          return Scaffold(
+    var data = widget.data;
+    return Scaffold(
+      body: PageView(
+        onPageChanged: (int) {
+          setState(() {
+          currentpage = int;
+          });
+        },
+        controller: pageController,
+        children: [
+          Scaffold(
             appBar: AppBar(
-              title: Text('Home Page'),
-              leading: IconButton(
-                    icon: Icon(
-                      Icons.logout,
-                    ),
-                    onPressed: () async {
-                      await auth.signOut();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WelcomePage(),
-                        ),
-                      );
-                    }),
-              actions: [
-                IconButton(
-                    icon: Icon(
-                      Icons.add_circle_rounded,
-                    ),
-                    onPressed: () async {}),
-              ],
+        title: Text('Home Page'),
+        leading: IconButton(
+            icon: Icon(
+              Icons.logout,
             ),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WelcomePage(),
+                ),
+              );
+            }),
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.add_circle_rounded,
+              ),
+              onPressed: () async {}),
+        ],
+      ),
             body: SafeArea(
               child: Center(
                 child: Padding(
@@ -69,11 +65,12 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.all(2.5),
                           child: ListTile(
                             title: Text(
-                            'Full Name: ${data['firstName']} ${data['lastName']}',
-                          ),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                          enableFeedback: true,
-                          onTap: (){},
+                              'Full Name: ${data['firstName']} ${data['lastName']}',
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            enableFeedback: true,
+                            onTap: () {},
                           ),
                         );
                       },
@@ -82,26 +79,36 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-          );
-        }
-
-        return Material(
-          child: Center(
-            child: Shimmer.fromColors(
-              baseColor: Colors.blueGrey,
-              highlightColor: Colors.grey,
-              child: Text(
-                'Loading...',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 40.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
           ),
-        );
-      },
+          CalendarPage(),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        enableFeedback: true,
+        currentIndex: currentpage,
+        onTap: (int) {
+          print(int);
+          setState(() {
+            currentpage = int;
+            pageController.animateToPage(
+              int,
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.solidCalendar),
+            label: 'Calendar',
+          ),
+        ],
+      ),
     );
   }
 }
+

@@ -1,13 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:schoolender_flutter/Home/home_page.dart';
 import 'Authentication/login_screen.dart';
 import 'Authentication/register_screen.dart';
 import 'Authentication/welcome_screen.dart';
+import 'Home/loading_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
         },
       ),
       routes: {
-        '/home': (context) => HomePage(),
+        '/home': (context) => LoadingPage(),
         '/welcome': (context) => WelcomePage(),
         '/loading': (context) => Scaffold(
             // backgroundColor: Colors.blueAccent,

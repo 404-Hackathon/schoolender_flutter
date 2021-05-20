@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:schoolender_flutter/Home/home_page.dart';
 
 class LogInPage extends StatefulWidget {
-  LogInPage({Key key}) : super(key: key);
+  LogInPage({Key? key}) : super(key: key);
 
   @override
   _LogInPageState createState() => _LogInPageState();
@@ -21,9 +21,9 @@ class _LogInPageState extends State<LogInPage> {
   final passwordController = TextEditingController();
 
   Future<void> signIn(
-      {@required String email,
-      @required String password,
-      Function action}) async {
+      {required String email,
+      required String password,
+      required Function action}) async {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       action();
@@ -50,16 +50,18 @@ class _LogInPageState extends State<LogInPage> {
     }
   }
 
-  bool checkIfSignedIn() {
-    auth.authStateChanges().listen((User user) {
+bool checkIfSignedIn() {
+    bool res = true;
+    auth.authStateChanges().listen((user) {
       if (user == null) {
         print('User is currently signed out!');
-        return false;
+        res = false;
       } else {
         print('User is signed in!');
-        return true;
+        res = true;
       }
     });
+    return res;
   }
 
   Future<void> setUp() async {
@@ -151,12 +153,13 @@ class _LogInPageState extends State<LogInPage> {
                       ElevatedButton(
                         child: Text('Log-In'),
                         onPressed: () async {
-                          if (_formKey.currentState.validate()) {
+                          if (_formKey.currentState!.validate()) {
                             await signIn(
                               email: emailController.text,
                               password: passwordController.text,
                               action: () {
-                                Navigator.pushNamedAndRemoveUntil(context, '/home', (_) => false);
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, '/home', (_) => false);
                                 // Navigator.pushReplacement(
                                 //   context,
                                 //   MaterialPageRoute(

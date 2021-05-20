@@ -6,7 +6,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:schoolender_flutter/Home/home_page.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({Key key}) : super(key: key);
+  RegisterPage({Key? key}) : super(key: key);
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -24,9 +24,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final rePasswordController = TextEditingController();
 
   Future<void> signIn(
-      {@required String email,
-      @required String password,
-      Function action}) async {
+      {required String email,
+      required String password,
+      required Function action}) async {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       action();
@@ -39,16 +39,18 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  bool checkIfSignedIn() {
-    auth.authStateChanges().listen((User user) {
+bool checkIfSignedIn() {
+    bool res = true;
+    auth.authStateChanges().listen((user) {
       if (user == null) {
         print('User is currently signed out!');
-        return false;
+        res = false;
       } else {
         print('User is signed in!');
-        return true;
+        res = true;
       }
     });
+    return res;
   }
 
   Future<void> setUp() async {
@@ -229,14 +231,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       ElevatedButton(
                         child: Text('Register'),
                         onPressed: () async {
-                          if (_formKey.currentState.validate()) {
+                          if (_formKey.currentState!.validate()) {
                             try {
                               await FirebaseAuth.instance
                                   .createUserWithEmailAndPassword(
                                 email: emailController.text.trim(),
                                 password: passwordController.text,
                               );
-                              users.doc(auth.currentUser.uid).set({
+                              users.doc(auth.currentUser!.uid).set({
                                 'email': emailController.text.trim(),
                                 'firstName': firstNameController.text.trim(),
                                 'lastName': lastNameController.text.trim(),

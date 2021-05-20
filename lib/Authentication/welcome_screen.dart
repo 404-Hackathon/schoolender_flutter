@@ -6,7 +6,7 @@ import 'package:schoolender_flutter/Home/home_page.dart';
  
  
 class WelcomePage extends StatefulWidget {
-  WelcomePage({Key key}) : super(key: key);
+  WelcomePage({Key? key}) : super(key: key);
 
   @override
   _WelcomePageState createState() => _WelcomePageState();
@@ -20,7 +20,7 @@ FirebaseAuth auth = FirebaseAuth.instance;
     super.initState();
     // setUp();
 
-    auth.authStateChanges().listen((User user) {
+    auth.authStateChanges().listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
       } else {
