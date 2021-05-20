@@ -36,8 +36,7 @@ class _HomePageState extends State<HomePage> {
           return Scaffold(
             appBar: AppBar(
               title: Text('Home Page'),
-              actions: [
-                IconButton(
+              leading: IconButton(
                     icon: Icon(
                       Icons.logout,
                     ),
@@ -50,13 +49,35 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     }),
+              actions: [
+                IconButton(
+                    icon: Icon(
+                      Icons.add_circle_rounded,
+                    ),
+                    onPressed: () async {}),
               ],
             ),
             body: SafeArea(
               child: Center(
-                child: Container(
-                  child: Text(
-                    'Full Name: ${data['firstName']} ${data['lastName']}',
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    child: ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(2.5),
+                          child: ListTile(
+                            title: Text(
+                            'Full Name: ${data['firstName']} ${data['lastName']}',
+                          ),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          enableFeedback: true,
+                          onTap: (){},
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
