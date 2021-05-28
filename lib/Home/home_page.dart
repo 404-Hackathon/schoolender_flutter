@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:schoolender_flutter/Authentication/welcome_screen.dart';
 import 'package:schoolender_flutter/Calendar/calendar_screen.dart';
+import 'package:schoolender_flutter/widgets/AdaptiveText.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key, required this.data}) : super(key: key);
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Scaffold(
             appBar: AppBar(
-        title: Text('Home Page'),
+        title: AdaptiveText('Home Page'),
         leading: IconButton(
             icon: Icon(
               Icons.logout,
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                         return Padding(
                           padding: const EdgeInsets.all(2.5),
                           child: ListTile(
-                            title: Text(
+                            title: AdaptiveText(
                               'Full Name: ${data['firstName']} ${data['lastName']}',
                             ),
                             shape: RoundedRectangleBorder(

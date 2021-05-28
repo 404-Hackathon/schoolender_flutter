@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:schoolender_flutter/Home/home_page.dart';
+import 'package:schoolender_flutter/widgets/AdaptiveText.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LoadingPage extends StatelessWidget {
@@ -36,7 +37,7 @@ class LoadingPage extends StatelessWidget {
             child: Shimmer.fromColors(
               baseColor: Colors.blueGrey,
               highlightColor: Colors.grey,
-              child: Text(
+              child: AdaptiveText(
                 'Loading...',
                 textAlign: TextAlign.center,
                 style: TextStyle(

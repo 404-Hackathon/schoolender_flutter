@@ -3,6 +3,7 @@ import 'package:flutter_neat_and_clean_calendar/flutter_neat_and_clean_calendar.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:schoolender_flutter/models/event.dart';
+import 'package:schoolender_flutter/widgets/AdaptiveText.dart';
 
 class CalendarPage extends ConsumerWidget {
   CalendarPage({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class CalendarPage extends ConsumerWidget {
     var events = watch(eventsProvider).state;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calendar'),
+        title: AdaptiveText('Calendar'),
         actions: [
           IconButton(
             icon: Icon(FontAwesomeIcons.plus),
@@ -38,7 +39,7 @@ class CalendarPage extends ConsumerWidget {
                       child: ListView(
                         shrinkWrap: true,
                         children: [
-                          Text('Heiii'),
+                          AdaptiveText('Hii'),
                         ],
                       ),
                       decoration: BoxDecoration(
@@ -55,18 +56,22 @@ class CalendarPage extends ConsumerWidget {
       ),
       body: Center(
         child: Container(
-            child: Calendar(
-          events: events,
-          isExpandable: true,
-          eventDoneColor: Colors.green,
-          selectedColor: Colors.pink,
-          todayColor: Colors.blue,
-          locale: 'en_US',
-          todayButtonText: 'Today',
-          expandableDateFormat: 'EEEE, dd. MMMM yyyy',
-          dayOfWeekStyle: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.w800, fontSize: 11),
-        )),
+          child: Calendar(
+            events: events,
+            isExpandable: true,
+            eventDoneColor: Colors.green,
+            selectedColor: Colors.pink,
+            todayColor: Colors.blue,
+            locale: 'en_US',
+            todayButtonText: 'Today',
+            expandableDateFormat: 'EEEE, dd. MMMM yyyy',
+            dayOfWeekStyle: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w800,
+              fontSize: 11,
+            ),
+          ),
+        ),
       ),
     );
   }

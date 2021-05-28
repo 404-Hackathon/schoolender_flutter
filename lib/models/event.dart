@@ -58,11 +58,11 @@ class Event {
 // };
 
 final eventsProvider = StateProvider((_) => {
-      DateTime.parse('2021-05-20'): [
+      DateTime.parse('2021-05-21'): [
         NeatCleanCalendarEvent(
           'My Event',
-          startTime: DateTime.parse("2021-05-20 17:30:00"),
-          endTime: DateTime.parse("2021-05-20 17:30:00"),
+          startTime: DateTime.parse("2021-05-21 17:30:00"),
+          endTime: DateTime.parse("2021-05-21 17:30:00"),
           color: Colors.orange,
         )
       ],
